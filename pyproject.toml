@@ -12,6 +12,7 @@ documentation = "https://github.com/EChachati/python-base-project/blob/master/RE
 python = "^3.10"
 simpy = "^4.1.1"
 flask = "^3.0.0"
+python-dotenv = "^1.0.0"
 
 [tool.poetry.group.dev.dependencies]
 ipdb = "^0.13.13"
