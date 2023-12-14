@@ -1,6 +1,12 @@
-# Python Base Project
+# Sistema de Colas en Python
 
-Repositorio prácticamente vacio, solo con configuraciones, úsalo para hacer cualquier proyecto que quieras 
+## Colas con Servidores Finitos
+Desarrollo de un modelo de colas en el que los servidores tengan una capacidad finita. Si la capacidad de un servidor se agota, los clientes deben esperar en una cola antes de ser atendidos. Calcula métricas como la longitud promedio de la cola y el tiempo máximo de espera.
+
+## Sistema de Colas con Tiempos de Servicio Variables
+
+
+Creación de una simulación de un sistema de colas donde los tiempos de servicio son variables, modelados por una distribución diferente a la exponencial. Puedes utilizar, por ejemplo, una distribución normal o una distribución personalizada. Además, agregar métricas para analizar el rendimiento del sistema bajo estos tiempos de servicio variables.
 
 # **Instalación de Proyecto Base en Python**
 
@@ -10,23 +16,16 @@ Este tutorial te guiará a través de los pasos para hacer un fork del proyecto 
 
   
 
-### **Hacer un Fork del Repositorio**
+### **Clonar Repositorio**
 
-  
 
-Primero, haz un fork del repositorio original a tu cuenta de GitHub. Visita el repositorio original [aquí](https://github.com/EChachati/python-base-project) y haz clic en el botón "Fork" en la esquina superior derecha de la página. Después, clona tu fork en tu máquina local.
+git  clone  https://github.com/vcdanielj/simulacion-sistema-de-colas
 
-  
-
-```bash
-
-git  clone  https://github.com/TU_USUARIO/NOMBRE_DEL_FORK.git
-
-cd  NOMBRE_DEL_FORK
+cd  simulacion-sistema-de-colas
 
 ```
 
-  
+
 
 ### **Configurar el Entorno Virtual**
 
@@ -44,14 +43,20 @@ python  -m  venv  venv
 source  venv/bin/activate
 
 ## Windows
-venv/Scripts/activate
+./venv/Scripts/activate
 ```
 
   
 
 ### **Instalar Dependencias**
 
-  
+Empezamos instalando Poetry con
+
+```bash
+
+pip  install  poetry
+
+```
 
 Este proyecto utiliza Poetry para manejar las dependencias. Al utilizar `poetry install --no-root`, se evita la instalación del proyecto en modo editable, lo que significa que no se instalará el proyecto actual como una dependencia.
 
@@ -66,6 +71,19 @@ El uso de `--no-root` es útil cuando estás desarrollando un proyecto, ya que e
 poetry  install  --no-root
 
 ```
+
+Luego tenemos que instalar las dependencias de tailwind con
+
+```bash
+
+npm install -D tailwindcss
+npx tailwindcss init
+```
+```bash
+
+npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
+```
+
 # Archivos en el Proyecto
 ## .github/workflows/linter.yml
 El archivo `.github/workflows/linter.yml` contiene la configuración de un flujo de trabajo de GitHub Actions. Este flujo de trabajo se ejecutará en eventos de `push` y `pull_request`.
