@@ -50,9 +50,6 @@ class Simulacion:
 
         self.env.run()
 
-sim = Simulacion()
-sim.ejecutar_simulacion(5)
-
 '''
 Por hacer => • Calcular el tiempo Promedio de espera, de llegada y de atencion de los clientes en forma de métrica :P
 '''

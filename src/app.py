@@ -2,9 +2,11 @@ import simpy  # noqa: I001
 from flask import Flask, jsonify, render_template
 
 from utils import Tienda
-
+from simulacion import Simulacion
 app = Flask(__name__)
 
+
+sim = Simulacion()
 
 # Configuración de parámetros para la simulación
 capacidad_servidores = 2
@@ -23,13 +25,14 @@ def home():
 
 
 @app.route("/colas-con-servidores-finitos")
-def exercise1():
+def exercise5():
     return render_template("/exercise5.html")
 
 
 @app.route("/colas-con-tiempos-de-servicio-variables")
-def exercise2():
-    return render_template("/exercise6.html")
+def exercise6():
+    sim.ejecutar_simulacion(5)
+    return render_template("/home.html")
 
 
 @app.route("/simular")
