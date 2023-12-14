@@ -84,6 +84,12 @@ npx tailwindcss init
 npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
 ```
 
+# Dependencias
+python = "^3.10"
+simpy = "^4.1.1"
+flask = "^3.0.0"
+python-dotenv = "^1.0.0"
+
 # Archivos en el Proyecto
 ## .github/workflows/linter.yml
 El archivo `.github/workflows/linter.yml` contiene la configuración de un flujo de trabajo de GitHub Actions. Este flujo de trabajo se ejecutará en eventos de `push` y `pull_request`.
