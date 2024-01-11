@@ -1,40 +1,74 @@
 <!DOCTYPE html>
 
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simulación de Tienda</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/styles.css') }}"
-    />
-  </head>
-  <body style="background-color: #212529; color: #fff">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+</head>
+
+<body style="background-color: #212529; color: #fff">
     <div class="container mt-5" style="background-color: #1b1d22; color: #fff; padding: 20px;">
-      <h1 class="text-center">Modelo de colas</h1>
+        <h1 class="text-center">Modelo de colas</h1>
 
-      <button
-        id="iniciarSimulacion"
-        class="btn btn-primary btn-lg btn-block"
-        onclick="iniciarSimulacion()"
-      >
-        Iniciar Simulación
-      </button>
+        <button id="iniciarSimulacion" class="btn btn-primary btn-lg btn-block" onclick="iniciarSimulacion()">
+            Iniciar Simulación
+        </button>
 
-      <div
-        id="resultados"
-        class="mt-4"
-        style="background-color: #1b1d22; color: #fff"
-      ></div>
+        <div id="resultados" class="mt-4" style="background-color: #1b1d22; color: #fff"></div>
     </div>
 
     <script>
+        function iniciarSimulacion() {
+            fetch("/iniciar")
+                .then((response) => response.text())
+                .then((data) => {
+                    alert("Simulación completada");
+                    obtenerMetricas(data);
+                    console.log(data);
+                })
+                .catch((error) => console.error("Error:", error));
+        }
+        function obtenerMetricas(data) {
+            
+            const jsonData = JSON.parse(data); // Parse JSON data to JavaScript object
+            const metricas = jsonData["metricas"]; 
+            const resultadosDiv = document.getElementById("resultados");
+            resultadosDiv.innerHTML = `
+                <h2 class="mt-4">Métricas de la simulación:</h2>
+                <p class="lead">Tiempo promedio de llegada: ${metricas["Promedio de llegada"].toFixed(
+                  2
+                )} minutos</p>
+                <p class="lead">Tiempo promedio de atención: ${metricas["Promedio de atencion"].toFixed(
+                  2
+                )} minutos</p>
+                <p class="lead">Tiempo promedio de espera: ${metricas["Promedio de espera"].toFixed(
+                  2
+                )} minutos</p>
+                
+                <h2 class="mt-4">Detalle de Clientes Atendidos:</h2>
+                <ul id="detalleClientes" class="list-group"></ul>
+            `;
 
+            const detalleClientesUl = document.getElementById("detalleClientes");
+
+            for (const key in jsonData["clientes"]) {
+                const li = document.createElement("li");
+                li.className = "list-group-item";
+
+                // Iterate over the array associated with each key
+                for (const item of jsonData["clientes"][key]) {
+                    li.innerHTML += `<p>${key}: ${item}</p>`;
+                }
+
+                detalleClientesUl.appendChild(li);
+            }
+
+        }
     </script>
-  </body>
+</body>
+
 </html>

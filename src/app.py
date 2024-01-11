@@ -3,6 +3,7 @@ from flask import Flask, jsonify, render_template
 
 from utils import Tienda
 from simulacion import Simulacion
+
 app = Flask(__name__)
 
 
@@ -27,12 +28,6 @@ def home():
 @app.route("/colas-con-servidores-finitos")
 def exercise5():
     return render_template("/exercise5.html")
-
-
-@app.route("/colas-con-tiempos-de-servicio-variables")
-def exercise6():
-    sim.ejecutar_simulacion(5)
-    return render_template("/home.html")
 
 
 @app.route("/simular")
@@ -63,6 +58,17 @@ def obtener_metricas():
     }
 
     return jsonify(metricas)
+
+
+@app.route("/colas-con-tiempos-de-servicio-variables")
+def exercise6():
+    return render_template("/exercise6.html")
+
+
+@app.route("/iniciar")
+def iniciar_simulacion():
+    data = sim.ejecutar_simulacion(5)
+    return jsonify(data)
 
 
 if __name__ == "__main__":
