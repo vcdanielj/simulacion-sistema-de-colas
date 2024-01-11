@@ -31,9 +31,28 @@ def exercise5():
 
 @app.route("/colas-con-tiempos-de-servicio-variables")
 def exercise6():
-    sim.ejecutar_simulacion(5)
-    return render_template("/home.html")
+    return render_template("/exercise6.html")
 
+
+@app.route("/datos")
+def obtener_datos():
+    datos_clientes=sim.ejecutar_simulacion(5)
+    detalles_clientes = [
+        {
+            "tiempo_atencion": cliente.tiempo_llegada,
+            "tiempo_espera": cliente.tiempo_atencion,
+        }
+        for cliente in datos_clientes
+    ]
+
+    datos = {
+        "tiempo_promedio_espera": 1,
+        "longitud_promedio_cola": 1,
+        "tiempo_maximo_espera": 1,
+        "detalles_clientes": detalles_clientes,
+    }
+    print(datos)
+    return jsonify(datos)
 
 @app.route("/simular")
 def simular():

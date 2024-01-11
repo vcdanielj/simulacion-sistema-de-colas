@@ -34,7 +34,59 @@
     </div>
 
     <script>
+      function iniciarSimulacion() {
+        fetch("/simular")
+          .then((response) => response.text())
+          .then((data) => {
+            alert("Simulación completada");
+            obtenerMetricas();
+          })
+          .catch((error) => console.error("Error:", error));
+      }
 
+      function obtenerMetricas() {
+        fetch("/datos")
+          .then((response) => response.json())
+          .then((data) => {
+            mostrarResultados(data);
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+
+      function mostrarResultados(datos) {
+        const resultadosDiv = document.getElementById("resultados");
+        resultadosDiv.innerHTML = `
+                <h2 class="mt-4">Métricas de la simulación:</h2>
+                <p class="lead">Tiempo promedio de espera de los clientes: ${datos.tiempo_promedio_espera.toFixed(
+                  2
+                )} minutos</p>
+                <p class="lead">Longitud promedio de la cola: ${datos.longitud_promedio_cola.toFixed(
+                  2
+                )}</p>
+                <p class="lead">Tiempo máximo de espera: ${datos.tiempo_maximo_espera.toFixed(
+                  2
+                )} minutos</p>
+                
+                <h2 class="mt-4">Detalle de Clientes Atendidos:</h2>
+                <ul id="detalleClientes" class="list-group"></ul>
+            `;
+
+        const detalleClientesUl = document.getElementById("detalleClientes");
+        for (const element of datos.detalles_clientes) {
+          const detalleCliente = element;
+          const li = document.createElement("li");
+          li.className = "list-group-item";
+          li.innerHTML = `
+                    Cliente atendido en el minuto ${detalleCliente.tiempo_atencion.toFixed(
+                      2
+                    )}. 
+                    Tiempo de espera: ${detalleCliente.tiempo_espera.toFixed(
+                      2
+                    )} minutos
+                `;
+          detalleClientesUl.appendChild(li);
+        }
+      }
     </script>
   </body>
 </html>
